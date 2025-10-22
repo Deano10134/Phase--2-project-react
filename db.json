@@ -1,0 +1,114 @@
+{
+  "movies": [
+    {
+      "id": 1,
+      "title": "The Shawshank Redemption",
+      "year": 1994,
+      "rating": 9.3,
+      "poster": "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
+      "description": "A banker wrongfully imprisoned forms a deep friendship and patiently engineers a path to freedom inside a corrupt prison.",
+      "director": "Frank Darabont",
+      "cast": ["Tim Robbins", "Morgan Freeman", "Bob Gunton"],
+      "classification": "MA 15+"
+    },
+    {
+      "id": 2,
+      "title": "The Dark Knight",
+      "year": 2008,
+      "rating": 9,
+      "poster": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+      "description": "Batman faces the Joker, a chaotic mastermind who pushes Gotham—and its hero—to the edge of moral collapse.",
+      "director": "Christopher Nolan",
+      "cast": ["Christian Bale", "Heath Ledger", "Aaron Eckhart"],
+      "classification": "M"
+    },
+    {
+      "id": 3,
+      "title": "Parasite",
+      "year": 2019,
+      "rating": 8.6,
+      "poster": "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
+      "description": "A working-class family schemes to infiltrate a wealthy household, blurring the line between opportunity and exploitation.",
+      "director": "Bong Joon-ho",
+      "cast": ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong"],
+      "classification": "MA 15+"
+    },
+    {
+      "id": 4,
+      "title": "The Matrix",
+      "year": 1999,
+      "rating": 8.7,
+      "poster": "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
+      "description": "A hacker discovers reality is a simulation and joins a rebellion against the machines controlling humanity.",
+      "director": "The Wachowskis",
+      "cast": ["Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss"],
+      "classification": "M"
+    },
+    {
+      "id": 5,
+      "title": "Gladiator",
+      "year": 2000,
+      "rating": 8.5,
+      "poster": "https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg",
+      "description": "A betrayed Roman general fights as a gladiator, seeking justice against the corrupt emperor who destroyed his family.",
+      "director": "Ridley Scott",
+      "cast": ["Russell Crowe", "Joaquin Phoenix", "Connie Nielsen"],
+      "classification": "MA 15+"
+    },
+    {
+      "id": 6,
+      "title": "Inception",
+      "year": 2010,
+      "rating": 8.8,
+      "poster": "https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg",
+      "description": "A thief who steals secrets through dreams is offered redemption if he can plant an idea deep inside a target's mind.",
+      "director": "Christopher Nolan",
+      "cast": ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"],
+      "classification": "M"
+    },
+    {
+      "id": 7,
+      "title": "Interstellar",
+      "year": 2014,
+      "rating": 8.6,
+      "poster": "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+      "description": "As Earth becomes uninhabitable, explorers journey through a wormhole in search of a new home—testing love, time, and sacrifice.",
+      "director": "Christopher Nolan",
+      "cast": ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"],
+      "classification": "M"
+    },
+    {
+      "id": 8,
+      "title": "Fight Club",
+      "year": 1999,
+      "rating": 8.8,
+      "poster": "https://image.tmdb.org/t/p/w500/bptfVGEQuv6vDTIMVCHjJ9Dz8PX.jpg",
+      "description": "An insomniac office worker and a soap maker form an underground club that unravels into a darker movement.",
+      "director": "David Fincher",
+      "cast": ["Brad Pitt", "Edward Norton", "Helena Bonham Carter"],
+      "classification": "R 18+"
+    },
+    {
+      "id": 9,
+      "title": "The Godfather",
+      "year": 1972,
+      "rating": 9.2,
+      "poster": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+      "description": "The aging head of a crime family hands the reins to his reluctant son, reshaping the future of the Corleone dynasty.",
+      "director": "Francis Ford Coppola",
+      "cast": ["Marlon Brando", "Al Pacino", "James Caan"],
+      "classification": "MA 15+"
+    },
+    {
+      "id": 10,
+      "title": "The Lord of the Rings: The Fellowship of the Ring",
+      "year": 2001,
+      "rating": 8.8,
+      "poster": "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
+      "description": "A humble hobbit sets out with a fellowship of allies to destroy a powerful ring before it corrupts the world.",
+      "director": "Peter Jackson",
+      "cast": ["Elijah Wood", "Ian McKellen", "Viggo Mortensen"],
+      "classification": "M"
+    }
+  ]
+}
