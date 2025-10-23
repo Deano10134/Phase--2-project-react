@@ -9,8 +9,8 @@ function MovieList() {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState('year'); // 'title', 'year', 'rating'
-  const [sortOrder, setSortOrder] = useState('desc'); // newest first
+  const [sortBy, setSortBy] = useState(null); // null | 'year' | 'rating'
+  const [sortOrder, setSortOrder] = useState('desc'); // 'asc' | 'desc' (ignored when sortBy is null)
 
   useEffect(() => {
     fetch(`${API_BASE}/movies`)
@@ -81,6 +81,9 @@ function MovieList() {
   };
 
   const getSortedMovies = (list) => {
+    // If no sort field selected, leave list as-is (no ordering)
+    if (!sortBy) return list;
+
     const sorted = [...list].sort((a, b) => {
       let aValue, bValue;
 
@@ -92,8 +95,8 @@ function MovieList() {
         case 'year': {
           const ay = getYear(a);
           const by = getYear(b);
-          // push unknown years to the end for both asc and desc
-          const norm = (v) => (v ?? (sortOrder === 'asc' ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY));
+          const norm = (v) =>
+            v ?? (sortOrder === 'asc' ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY);
           aValue = norm(ay);
           bValue = norm(by);
           break;
@@ -114,24 +117,27 @@ function MovieList() {
     return sorted;
   };
 
-  const handleSortChange = (newSortBy) => {
-    if (sortBy === newSortBy) {
-      // If clicking the same sort button, toggle the order
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      // If clicking a different sort button, set new sort and default to ascending
-      setSortBy(newSortBy);
-      setSortOrder('asc');
+  const defaultOrderFor = (field) => {
+    if (field === 'title') return 'asc';
+    if (field === 'year') return 'desc';
+    if (field === 'rating') return 'desc';
+    return 'asc';
+  };
+
+  const handleSortField = (field) => {
+    if (sortBy !== field) {
+      setSortBy(field);
+      setSortOrder(defaultOrderFor(field));
     }
   };
-  
+
   // Use the existing filteredMovies and then sort it
   const sortedAndFilteredMovies = getSortedMovies(filteredMovies);
 
   return (
     <div className="movie-list-container">
       <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
-      
+
       <div className="movie-list-header">
         <h2>All Movies</h2>
         <div className="header-actions">
@@ -139,13 +145,40 @@ function MovieList() {
           <Link to="/movies/new" className="btn btn-primary">
             + Add Movie
           </Link>
-          <button
-            className={`sort-btn ${sortBy === 'rating' ? 'active' : ''}`}
-            onClick={() => handleSortChange('rating')}
-          >
-            Rating {sortBy === 'rating' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
-          </button>
-          </div>
+        </div>
+      </div>
+
+      {/* Sort controls: Year/Rating and Asc/Desc */}
+      <div className="sort-controls">
+        <span className="sort-label">Sort by:</span>
+        <button
+          className={`sort-btn ${sortBy === 'year' ? 'active' : ''}`}
+          onClick={() => handleSortField('year')}
+        >
+          Year {sortBy === 'year' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
+        </button>
+        <button
+          className={`sort-btn ${sortBy === 'rating' ? 'active' : ''}`}
+          onClick={() => handleSortField('rating')}
+        >
+          Rating {sortBy === 'rating' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
+        </button>
+
+        <span className="sort-label">Order:</span>
+        <button
+          className={`sort-btn ${sortBy && sortOrder === 'asc' ? 'active' : ''}`}
+          disabled={!sortBy}
+          onClick={() => setSortOrder('asc')}
+        >
+          Asc
+        </button>
+        <button
+          className={`sort-btn ${sortBy && sortOrder === 'desc' ? 'active' : ''}`}
+          disabled={!sortBy}
+          onClick={() => setSortOrder('desc')}
+        >
+          Desc
+        </button>
       </div>
 
       {sortedAndFilteredMovies.length === 0 ? (
@@ -155,7 +188,7 @@ function MovieList() {
         </div>
       ) : (
         <div className="movies-grid">
-          {sortedAndFilteredMovies.map(movie => (
+          {sortedAndFilteredMovies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
