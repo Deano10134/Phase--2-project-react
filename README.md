@@ -14,6 +14,7 @@ It is a simple React application that allows a user to view a list of movies. Th
 - JavaScript
 - HTML/CSS
 - Json Server (for mock backend)
+
 ## Installation
 1. Clone the repository:
     ```bash
@@ -37,7 +38,13 @@ It is a simple React application that allows a user to view a list of movies. Th
     ```bash
     npm start
     ```
-5. Open your browser and go to `http://localhost:3000` to view the application.
+5. In a separate terminal, start the mock backend server using Json Server:
+    ```bash
+    npx json-server --watch db.json --port 5001
+    ```
+6. Open your browser and go to `http://localhost:5001/movies` to view the mock backend.
+
+7. In a separate tab, in your browser go to `http://localhost:3000` to view the application.
 
 ## Usage
 - To view the list of movies, navigate to the home page.
