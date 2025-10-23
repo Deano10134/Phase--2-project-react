@@ -1,7 +1,60 @@
+
+## Project Overview
+
+It is a simple React application that allows a user to view a list of movies. The user can add a new movie to the list, edit existing movies, and delete movies from the list. For simplicity, the list is limted to just 10 from the movie db API. The application uses React Router v7 for navigation between different pages. It also uses a mock backend using Json Server to simulate CRUD operations.
+## Features
+- View a list of movies
+- Add a new movie
+- Edit existing movies
+- Delete movies
+- Navigation using React Router v7
+## Technologies Used
+- React
+- React Router v7
+- JavaScript
+- HTML/CSS
+- Json Server (for mock backend)
+## Installation
+1. Clone the repository:
+    ```bash
+    git clone
+
+    ``` 
+    git clone
+
+
+            <repository_url>
+    ```
+2. Navigate to the project directory:
+    ```bash
+    cd Phase-2-project-react
+    ```
+3. Install the dependencies:
+    ```bash
+    npm install
+    ```
+4. Start the development server:
+    ```bash
+    npm start
+    ```
+5. Open your browser and go to `http://localhost:3000` to view the application.
+
+## Usage
+- To view the list of movies, navigate to the home page.
+- To add a new movie, click on the "Add Movie" button and fill out the form.
+- To edit an existing movie, click on the "Edit" button next to the movie you want to edit, make the changes in the form, and save.
+- To delete a movie, click on the "Delete" button next to the movie you want to delete and confirm the action in the pop-up confirmation dialog.        
+- Use the navigation links to switch between different pages of the application.
+## Contributing
+Contributions are welcome! If you would like to contribute to this project, please follow these steps:
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with descriptive messages.
+4. Push your changes to your forked repository
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
