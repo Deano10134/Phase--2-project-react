@@ -59,6 +59,10 @@ Contributions are welcome! If you would like to contribute to this project, plea
 3. Make your changes and commit them with descriptive messages.
 4. Push your changes to your forked repository
 
+The React app was created using Create React App. See the section below for more information.
+_________________________________________________________________________________________________________
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
