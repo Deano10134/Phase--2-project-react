@@ -24,13 +24,7 @@ It is a simple React application that allows a user to view a list of movies. Th
 ## Installation
 1. Clone the repository:
     ```bash
-    git clone
-
-    ``` 
-    git clone
-
-
-            <repository_url>
+    git clone  <repository_url>
     ```
 2. Navigate to the project directory:
     ```bash
