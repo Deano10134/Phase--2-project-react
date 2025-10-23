@@ -1,7 +1,7 @@
 
 ## Project Overview
 
-It is a simple React application that allows a user to view a list of movies. The user can add a new movie to the list, edit existing movies, and delete movies from the list. For simplicity, the list is limted to just 10 from the movie db API. The application uses React Router v7 for navigation between different pages. It also uses a mock backend using Json Server to simulate CRUD operations.
+This is a simple React application that allows a user to view a list of movies. The user can add a new movie to the list, edit existing movies, and delete movies from the list. For simplicity, the list is limted to just 10 from the movie TMDB API:'https://www.themoviedb.org/'. The application uses React Router v7 for navigation between different pages. It also uses a mock backend using Json Server to simulate CRUD operations.
 ## Features
 - View a list of movies
 - Add a new movie
