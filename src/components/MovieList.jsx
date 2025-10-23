@@ -123,9 +123,11 @@ function MovieList() {
     if (field === 'rating') return 'desc';
     return 'asc';
   };
-
+// Clicking the same field toggles asc/desc; switching field picks default order
   const handleSortField = (field) => {
-    if (sortBy !== field) {
+    if (sortBy === field) {
+      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
       setSortBy(field);
       setSortOrder(defaultOrderFor(field));
     }
@@ -162,22 +164,6 @@ function MovieList() {
           onClick={() => handleSortField('rating')}
         >
           Rating {sortBy === 'rating' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
-        </button>
-
-        <span className="sort-label">Order:</span>
-        <button
-          className={`sort-btn ${sortBy && sortOrder === 'asc' ? 'active' : ''}`}
-          disabled={!sortBy}
-          onClick={() => setSortOrder('asc')}
-        >
-          Asc
-        </button>
-        <button
-          className={`sort-btn ${sortBy && sortOrder === 'desc' ? 'active' : ''}`}
-          disabled={!sortBy}
-          onClick={() => setSortOrder('desc')}
-        >
-          Desc
         </button>
       </div>
 
