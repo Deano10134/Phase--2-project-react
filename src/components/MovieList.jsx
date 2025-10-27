@@ -5,11 +5,24 @@ import SearchBar from './SearchBar';
 
 const API_BASE = 'http://localhost:5000';
 
+function slugify(text) {
+  if (!text) return '';
+
+  return text
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '-')           // Replace whitespace with hyphens
+    .replace(/[^a-z0-9-]+/g, '')    // Remove non-alphanumeric (except hyphens)
+    .replace(/--+/g, '-')           // Replace multiple hyphens with single hyphen
+    .replace(/^-+|-+$/g, '');       // Remove leading/trailing hyphens
+}
+
 function MovieList() {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState(null); // null | 'year' | 'rating'
+  const [sortBy, setSortBy] = useState(null); // null | 'title' | 'year' | 'rating'
   const [sortOrder, setSortOrder] = useState('desc'); // 'asc' | 'desc' (ignored when sortBy is null)
 
   useEffect(() => {
@@ -64,8 +77,7 @@ function MovieList() {
 
     const num = typeof candidate === 'string' ? parseFloat(candidate) : Number(candidate);
     return Number.isFinite(num) ? num : 0;
-  };
-// 
+};
 
   // Extract a year from various shapes; return number or null if unknown
   const getYear = (movie) => {
@@ -124,15 +136,17 @@ function MovieList() {
     return 'asc';
   };
 // Clicking the same field toggles asc/desc; switching field picks default order
-  const handleSortField = (field) => {
-    if (sortBy === field) {
-      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-    } else {
-      setSortBy(field);
-      setSortOrder(defaultOrderFor(field));
-    }
-  };
-
+/**
+ * Clicking the same field toggles asc/desc; switching field picks default order
+ */
+const handleSortField = (field) => {
+  if (sortBy === field) {
+    setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+  } else {
+    setSortBy(field);
+    setSortOrder(defaultOrderFor(field));
+  }
+};
   // Use the existing filteredMovies and then sort it
   const sortedAndFilteredMovies = getSortedMovies(filteredMovies);
 
@@ -153,6 +167,12 @@ function MovieList() {
       {/* Sort controls: Year/Rating and Asc/Desc */}
       <div className="sort-controls">
         <span className="sort-label">Sort by:</span>
+        <button
+          className={`sort-btn ${sortBy === 'title' ? 'active' : ''}`}
+          onClick={() => handleSortField('title')}
+        >
+          Title {sortBy === 'title' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
+        </button>
         <button
           className={`sort-btn ${sortBy === 'year' ? 'active' : ''}`}
           onClick={() => handleSortField('year')}

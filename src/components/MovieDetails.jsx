@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { slugify } from '../utils/slugify';
 
 const API_BASE = 'http://localhost:5000';
 
@@ -64,7 +65,7 @@ function MovieDetails() {
             ← Back to Movies
           </Link>
           <div className="action-buttons">
-            <Link to={`/movies/${id}/edit`} className="btn btn-edit">
+            <Link to={`/movies/${id}/${slugify(title)}/edit`} className="btn btn-edit">
               Edit
             </Link>
             <button onClick={handleDelete} className="btn btn-danger">

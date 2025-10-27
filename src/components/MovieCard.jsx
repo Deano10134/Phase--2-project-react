@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { slugify } from '../utils/slugify';
 
 function MovieCard({ movie }) {
   const { id, title, year, rating, poster } = movie;
 
   return (
-    <Link to={`/movies/${id}`} className="movie-card">
+    <Link to={`/movies/${id}/${slugify(title)}`} className="movie-card">
       <div className="movie-card-image">
         {poster ? (
           <img src={poster} alt={`${title} poster`} />
