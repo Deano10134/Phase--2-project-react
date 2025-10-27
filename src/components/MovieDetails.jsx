@@ -8,18 +8,15 @@ function MovieDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${API_BASE}/movies/${id}`)
       .then(response => response.json())
       .then(data => {
         setMovie(data);
-        setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching movie:', error);
-        setLoading(false);
       });
   }, [id]);
 
@@ -31,15 +28,6 @@ function MovieDetails() {
         })
         .catch(error => console.error('Error deleting movie:', error));
     }
-  }
-
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="spinner"></div>
-        <p>Loading movie...</p>
-      </div>
-    );
   }
 
   if (!movie) {

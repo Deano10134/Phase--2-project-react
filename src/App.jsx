@@ -36,10 +36,6 @@ const router = createBrowserRouter([
         element: <MovieForm isEdit={false} />
       },
       {
-        path: "movies/:id",
-        element: <MovieDetails />
-      },
-      {
         path: "movies/:id/:slug",
         element: <MovieDetails />
       },
