@@ -20,6 +20,8 @@ function MovieDetails() {
       });
   }, [id]);
 
+  // Handle delete movies button
+
   function handleDelete() {
     if (window.confirm(`Are you sure you want to delete "${movie.title}"?`)) {
       fetch(`${API_BASE}/movies/${id}`, { method: 'DELETE' })

@@ -47,6 +47,7 @@ function MovieList() {
     return Number.isFinite(num) ? num : null;
   };
 
+  // Sort movies based on selected field and order
   const getSortedMovies = (list) => {
     if (!sortBy) return list;
 
@@ -95,7 +96,7 @@ function MovieList() {
 
   const sortedAndFilteredMovies = getSortedMovies(filteredMovies);
 
-
+// Handle empty state - no movies at all
   if (movies.length === 0) {
     return (
       <div className="empty-state">
