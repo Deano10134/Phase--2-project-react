@@ -8,7 +8,6 @@ const API_BASE = 'http://localhost:5000';
 function MovieList() {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState(null); // 'title' | 'year' | 'rating'
   const [sortOrder, setSortOrder] = useState('desc'); // 'asc' | 'desc'
 
