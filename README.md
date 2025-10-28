@@ -1,4 +1,5 @@
 
+
 ## Project Overview
 
 As part of Phase 2 of the Academy Xi's Software Engineering Transform course, this project is a React application that demonstrates CRUD operations with a mock backend.
@@ -7,19 +8,44 @@ It is a simple React application that allows a user to view a list of movies. Th
 
 (Full disclaimer: This is a learning project and is not intended for production use.)
 
-## Features
-- View a list of movies
-- Add a new movie
-- Edit existing movies
-- Delete movies
-- Navigation using React Router v7
 
-## Technologies Used
-- React
-- React Router v7
-- JavaScript
-- HTML/CSS
-- Json Server (for mock backend)
+![React](https://img.shields.io/badge/React-18.x-blue)
+![React Router](https://img.shields.io/badge/React%20Router-v7-red)
+![JSON Server](https://img.shields.io/badge/JSON%20Server-Mock%20API-green)
+
+
+## Features
+- 📋 **View Movies** - Browse your complete movie collection in a responsive grid
+- ➕ **Add Movies** - Create new movie entries with title, year, rating, and poster
+- ✏️ **Edit Movies** - Update existing movie information
+- 🗑️ **Delete Movies** - Remove movies with confirmation dialog
+- 🔍 **Search** - Filter movies by title in real-time
+- 🔢 **Sort** - Organize by title, year, or rating (ascending/descending)
+- 🧭 **Routing** - Seamless navigation using React Router v7
+
+### Frontend
+- **React 18.x** - UI library
+- **React Router v7** - Client-side routing
+- **JavaScript (ES6+)** - Programming language
+- **CSS3** - Styling
+
+### Backend
+- **JSON Server** - Mock REST API for development
+
+
+## 📦 Prerequisites
+
+Before you begin, ensure you have the following installed:
+- **Node.js** (v14.0.0 or higher)
+- **npm** (v6.0.0 or higher) or **yarn**
+
+Check your versions:
+```bash
+node --version
+npm --version
+```
+
+
 
 ## Installation
 1. Clone the repository:
@@ -38,29 +64,124 @@ It is a simple React application that allows a user to view a list of movies. Th
     ```bash
     npm start
     ```
-5. In a separate terminal, start the mock backend server using Json Server:
-    ```bash
-    npx json-server --watch db.json --port 5001
-    ```
-6. Open your browser and go to `http://localhost:5001/movies` to view the mock backend.
+## 🏃 Running the Application
 
-7. In a separate tab, in your browser go to `http://localhost:3000` to view the application.
+You need to run **two servers** simultaneously:
 
-## Usage
-- To view the list of movies, navigate to the home page.
-- To add a new movie, click on the "Add Movie" button and fill out the form.
-- To edit an existing movie, click on the "Edit" button next to the movie you want to edit, make the changes in the form, and save.
-- To delete a movie, click on the "Delete" button next to the movie you want to delete and confirm the action in the pop-up confirmation dialog.        
-- Use the navigation links to switch between different pages of the application.
-## Contributing
-Contributions are welcome! If you would like to contribute to this project, please follow these steps:
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and commit them with descriptive messages.
-4. Push your changes to your forked repository
+### Terminal 1: JSON Server (Backend)
+```bash
+npx json-server --watch db.json --port 5000
+```
+
+**Expected output:**
+```
+JSON Server is running on http://localhost:5000
+Resources:
+  http://localhost:5000/movies
+```
+
+### Terminal 2: React Development Server (Frontend)
+```bash
+npm start
+```
+
+**Expected output:**
+```
+Compiled successfully!
+You can now view the app in the browser.
+  Local:            http://localhost:3000
+```
+
+### 🌐 Access the Application
+- **React App:** [http://localhost:3000](http://localhost:3000)
+- **JSON API:** [http://localhost:5000/movies](http://localhost:5000/movies)
+
+
+
+## 🔌 API Endpoints
+
+The JSON Server provides the following REST API endpoints:
+
+| Method | Endpoint           | Description              |
+|--------|-------------------|--------------------------|
+| GET    | `/movies`         | Get all movies           |
+| GET    | `/movies/:id`     | Get movie by ID          |
+| POST   | `/movies`         | Create new movie         |
+| PATCH  | `/movies/:id`     | Update movie             |
+| DELETE | `/movies/:id`     | Delete movie             |
+
+
+### Example Request
+```javascript
+// GET all movies
+fetch('http://localhost:5000/movies')
+  .then(res => res.json())
+  .then(data => console.log(data));
+```
+
+
+## 📖 Usage Guide
+
+### Adding a Movie
+1. Click the **"+ Add Movie"** button
+2. Fill in the form:
+   - **Title** (required)
+   - **Year** (required, 1900-2100)
+   - **Rating** (required, 0-10)
+   - **Poster URL** (optional)
+3. Click **"Add Movie"** to save
+
+### Editing a Movie
+1. Navigate to a movie's detail page
+2. Click the **"Edit"** button
+3. Update the form fields
+4. Click **"Update Movie"** to save changes
+
+### Deleting a Movie
+1. From any movie card, click **"Delete"**
+2. Confirm the action in the dialog
+3. Movie is removed from the collection
+
+### Searching
+- Use the search bar to filter movies by title
+- Results update in real-time as you type
+
+### Sorting
+- Click column headers to sort:
+  - **Title** (A-Z / Z-A)
+  - **Year** (Newest / Oldest)
+  - **Rating** (Highest / Lowest)
+- Click again to reverse sort order
+
+
+## 🤝 Contributing
+
+Contributions are welcome! To contribute:
+
+1. **Fork** the repository
+2. **Create** a feature branch
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+3. **Commit** your changes
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
+4. **Push** to the branch
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+5. **Open** a Pull Request
+
+### Coding Standards
+- Use functional components with hooks
+- Follow existing code style
+- Add comments for complex logic
+- Test your changes thoroughly
 
 The React app was created using Create React App. See the section below for more information.
 _________________________________________________________________________________________________________
+
 
 
 # Getting Started with Create React App
