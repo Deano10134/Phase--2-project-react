@@ -6,22 +6,26 @@ const API_BASE = 'http://localhost:5000';
 function MovieForm({ isEdit = false }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     title: '',
     year: '',
     rating: '',
     poster: ''
   });
-  
-  const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState(null);
 
   // Fetch existing movie data if editing
   useEffect(() => {
     if (isEdit && id) {
-      setLoading(true);
       fetch(`${API_BASE}/movies/${id}`)
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch movie');
+          }
+          return response.json();
+        })
         .then(movie => {
           setFormData({
             title: movie.title || '',
@@ -29,86 +33,65 @@ function MovieForm({ isEdit = false }) {
             rating: movie.rating || '',
             poster: movie.poster || ''
           });
-          setLoading(false);
         })
-        .catch(error => {
-          console.error('Error fetching movie:', error);
-          setLoading(false);
-        });
+        .catch(err => {
+          console.error('Error fetching movie:', err);
+          setError('Could not load movie data.');
+        })
     }
   }, [isEdit, id]);
 
   // Controlled form - handle input changes
-  function handleChange(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  }
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   // Handle form submission
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Convert year and rating to numbers
+    setError(null);
+
     const movieData = {
-      title: formData.title,
+      title: formData.title.trim(),
       year: parseInt(formData.year),
       rating: parseFloat(formData.rating),
-      poster: formData.poster
+      poster: formData.poster.trim()
     };
 
-    if (isEdit) {
-      // UPDATE - PATCH request
-      const configObj = {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(movieData)
-      };
+    const configObj = {
+      method: isEdit ? 'PATCH' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(movieData)
+    };
 
-      fetch(`${API_BASE}/movies/${id}`, configObj)
-        .then(res => res.json())
-        .then(() => {
-          navigate(`/movies/${id}`);
-        })
-        .catch(error => console.error('Error updating movie:', error));
-    } else {
-      // CREATE - POST request
-      const configObj = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(movieData)
-      };
+    const endpoint = isEdit ? `${API_BASE}/movies/${id}` : `${API_BASE}/movies`;
 
-      fetch(`${API_BASE}/movies`, configObj)
-        .then(res => res.json())
-        .then(data => {
-          // Navigate to the new movie's detail page
-          navigate(`/movies/${data.id}`);
-        })
-        .catch(error => console.error('Error creating movie:', error));
-    }
-  }
-
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="spinner"></div>
-        <p>Loading movie...</p>
-      </div>
-    );
-  }
+    fetch(endpoint, configObj)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Failed to save movie');
+        }
+        return res.json();
+      })
+      .then(data => {
+        navigate(`/movies/${isEdit ? id : data.id}`);
+      })
+      .catch(err => {
+        console.error('Error saving movie:', err);
+        setError('Something went wrong. Please try again.');
+      });
+  };
 
   return (
     <div className="form-container">
       <div className="form-card">
         <div className="form-header">
           <h2>{isEdit ? 'Edit Movie' : 'Add New Movie'}</h2>
-          <Link to="/movies" className="cancel-link">
-            Cancel
-          </Link>
+          <Link to="/movies" className="cancel-link">Cancel</Link>
         </div>
+
+        {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit} className="movie-form">
           <div className="form-group">
@@ -121,6 +104,10 @@ function MovieForm({ isEdit = false }) {
               onChange={handleChange}
               required
               placeholder="Enter movie title"
+              aria-label="Movie title"
+              aria-required="true"
+              aria-invalid={!!error}
+              aria-describedby={error ? "title-error" : undefined}
             />
           </div>
 
@@ -173,9 +160,7 @@ function MovieForm({ isEdit = false }) {
             <button type="submit" className="btn btn-primary">
               {isEdit ? 'Update Movie' : 'Add Movie'}
             </button>
-            <Link to="/movies" className="btn btn-secondary">
-              Cancel
-            </Link>
+            <Link to="/movies" className="btn btn-secondary">Cancel</Link>
           </div>
         </form>
       </div>

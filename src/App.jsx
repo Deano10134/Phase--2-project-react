@@ -1,5 +1,7 @@
 import React from 'react';
-import { RouterProvider, createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
+import {RouterProvider,createBrowserRouter, Navigate, Outlet}  //React Router v7
+from 'react-router-dom';
+
 import Navbar from './components/Navbar';
 import MovieList from './components/MovieList';
 import MovieDetails from './components/MovieDetails';
@@ -20,7 +22,7 @@ function RootLayout() {
 // Create router with layout
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <RootLayout />,
     children: [
       {
@@ -28,19 +30,19 @@ const router = createBrowserRouter([
         element: <Navigate to="/movies" replace />
       },
       {
-        path: "movies",
+        path: 'movies',
         element: <MovieList />
       },
       {
-        path: "movies/new",
+        path: 'movies/new',
         element: <MovieForm isEdit={false} />
       },
       {
-        path: "movies/:id/:slug",
+        path: 'movies/:id/:slug',
         element: <MovieDetails />
       },
       {
-        path: "movies/:id/:slug/edit",
+        path: 'movies/:id/:slug/edit',
         element: <MovieForm isEdit={true} />
       }
     ]

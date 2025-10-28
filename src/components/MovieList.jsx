@@ -9,50 +9,21 @@ function MovieList() {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState(null); // null | 'title' | 'year' | 'rating'
-  const [sortOrder, setSortOrder] = useState('desc'); // 'asc' | 'desc' (ignored when sortBy is null)
+  const [sortBy, setSortBy] = useState(null); // 'title' | 'year' | 'rating'
+  const [sortOrder, setSortOrder] = useState('desc'); // 'asc' | 'desc'
 
   useEffect(() => {
     fetch(`${API_BASE}/movies`)
       .then(response => response.json())
       .then(data => {
-        // Ensure data is always an array
         setMovies(Array.isArray(data) ? data : []);
-        setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching movies:', error);
-        setMovies([]); // Set to empty array on error
-        setLoading(false);
+        setMovies([]);
       });
   }, []);
 
-  const filteredMovies = movies.filter(movie =>
-    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="spinner"></div>
-        <p>Loading movies...</p>
-      </div>
-    );
-  }
-
-  if (movies.length === 0) {
-    return (
-      <div className="empty-state">
-        <h2>No movies yet!</h2>
-        <p>Start by adding your first movie.</p>
-        <Link to="/movies/new" className="btn btn-primary">
-          Add Movie
-        </Link>
-      </div>
-    );
-  }
-
-  // Prefer user rating if present; fall back to TMDB vote_average; coerce to number
   const getUserRating = (movie) => {
     const candidate =
       movie.userRating ??
@@ -64,42 +35,34 @@ function MovieList() {
 
     const num = typeof candidate === 'string' ? parseFloat(candidate) : Number(candidate);
     return Number.isFinite(num) ? num : 0;
-};
+  };
 
-  // Extract a year from various shapes; return number or null if unknown
   const getYear = (movie) => {
     const y =
       movie.year ??
       movie.release_year ??
       movie.releaseYear ??
-      (movie.release_date ? new Date(movie.release_date).getFullYear() : null) ??
-      null;
+      (movie.release_date ? new Date(movie.release_date).getFullYear() : null);
 
     const num = typeof y === 'string' ? parseInt(y, 10) : Number(y);
     return Number.isFinite(num) ? num : null;
   };
 
   const getSortedMovies = (list) => {
-    // If no sort field selected, leave list as-is (no ordering)
     if (!sortBy) return list;
 
-    const sorted = [...list].sort((a, b) => {
+    return [...list].sort((a, b) => {
       let aValue, bValue;
 
       switch (sortBy) {
         case 'title':
-          aValue = a.title?.toLowerCase() || '';
-          bValue = b.title?.toLowerCase() || '';
+          aValue = a.title?.toLowerCase().trim() || '';
+          bValue = b.title?.toLowerCase().trim() || '';
           break;
-        case 'year': {
-          const ay = getYear(a);
-          const by = getYear(b);
-          const norm = (v) =>
-            v ?? (sortOrder === 'asc' ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY);
-          aValue = norm(ay);
-          bValue = norm(by);
+        case 'year':
+          aValue = getYear(a) ?? (sortOrder === 'asc' ? Infinity : -Infinity);
+          bValue = getYear(b) ?? (sortOrder === 'asc' ? Infinity : -Infinity);
           break;
-        }
         case 'rating':
           aValue = getUserRating(a);
           bValue = getUserRating(b);
@@ -112,30 +75,39 @@ function MovieList() {
       if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
       return 0;
     });
-
-    return sorted;
   };
 
   const defaultOrderFor = (field) => {
-    if (field === 'title') return 'asc';
-    if (field === 'year') return 'desc';
-    if (field === 'rating') return 'desc';
-    return 'asc';
+    return field === 'title' ? 'asc' : 'desc';
   };
-// Clicking the same field toggles asc/desc; switching field picks default order
-/**
- * Clicking the same field toggles asc/desc; switching field picks default order
- */
-const handleSortField = (field) => {
-  if (sortBy === field) {
-    setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-  } else {
-    setSortBy(field);
-    setSortOrder(defaultOrderFor(field));
-  }
-};
-  // Use the existing filteredMovies and then sort it
+
+  const handleSortField = (field) => {
+    if (sortBy === field) {
+      setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortBy(field);
+      setSortOrder(defaultOrderFor(field));
+    }
+  };
+
+  const filteredMovies = movies.filter(movie =>
+    movie.title?.toLowerCase().trim().includes(searchTerm.toLowerCase().trim())
+  );
+
   const sortedAndFilteredMovies = getSortedMovies(filteredMovies);
+
+
+  if (movies.length === 0) {
+    return (
+      <div className="empty-state">
+        <h2>No movies yet!</h2>
+        <p>Start by adding your first movie.</p>
+        <Link to="/movies/new" className="btn btn-primary">
+          Add Movie
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="movie-list-container">
@@ -151,7 +123,6 @@ const handleSortField = (field) => {
         </div>
       </div>
 
-      {/* Sort controls: Year/Rating and Asc/Desc */}
       <div className="sort-controls">
         <span className="sort-label">Sort by:</span>
         <button
@@ -181,7 +152,7 @@ const handleSortField = (field) => {
         </div>
       ) : (
         <div className="movies-grid">
-          {sortedAndFilteredMovies.map((movie) => (
+          {sortedAndFilteredMovies.map(movie => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
@@ -189,4 +160,5 @@ const handleSortField = (field) => {
     </div>
   );
 }
+
 export default MovieList;
